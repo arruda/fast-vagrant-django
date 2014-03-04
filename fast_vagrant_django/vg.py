@@ -5,8 +5,6 @@ from __future__ import absolute_import
 import os
 import sys
 
-#only to dev
-
 
 if __name__ == "__main__" and __package__ is None:
 
