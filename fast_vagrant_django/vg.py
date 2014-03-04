@@ -1,10 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import sys
-from vagrants import Vagrant
 
-if __name__ == "__main__":
+#only to dev
+
+
+if __name__ == "__main__" and __package__ is None:
+
+    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    os.sys.path.insert(1, parent_dir)
+    mod = __import__('fast_vagrant_django')
+    sys.modules["fast_vagrant_django"] = mod
+
+    __package__='fast_vagrant_django'
+
+    from .vagrants import Vagrant
+
 
     proj_name = sys.argv[1]
     path = sys.argv[2]
