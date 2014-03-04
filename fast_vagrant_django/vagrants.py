@@ -45,6 +45,8 @@ class Vagrant(object):
             'vb_name' : "proj-vm",
             'vb_memory' : 1024,
 
+            'vb_guess_auto_update' : False,
+
             'manifest_file' : "proj.pp",
 
         }
