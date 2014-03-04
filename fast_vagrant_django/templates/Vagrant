@@ -11,8 +11,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.box_url = "{{ vagrant.box_url }}" #"http://files.vagrantup.com/precise64.box"
 
-  config.vm.network :forwarded_port, guest: 8000, host: 8000
-  config.vm.network :forwarded_port, guest: 5432, host: 8003
+  {% for forwarded_port in vagrant.forwarded_ports %}
+  config.vm.network :forwarded_port, guest: forwarded_port.guess, host: forwarded_port.host
+  {% endfor %}
 
 
 

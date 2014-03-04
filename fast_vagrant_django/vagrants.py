@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
 import os
 
 from jinja2 import Environment, FileSystemLoader
@@ -9,8 +8,17 @@ from jinja2 import Environment, FileSystemLoader
 loader = FileSystemLoader('./templates')
 env = Environment(loader = loader)
 
+class FowardedPort(object):
+
+    def __init__(self, guess,host):
+        super(FowardedPort, self).__init__()
+        self.guess = guess
+        self.host = host
+
+
 class Vagrant(object):
     """docstring for Vagrant"""
+
     def __init__(self, box="precise.box", private_network_ip="192.168.56.101",
         box_url="http://files.vagrantup.com/precise64.box",
         vb_name="proj-vm", manifest_file="proj.pp"):
@@ -20,6 +28,10 @@ class Vagrant(object):
         self.box_url = box_url
         self.vb_name = vb_name
         self.manifest_file = manifest_file
+        self.forwarded_ports = [
+            FowardedPort(guess="8000",host="8000"),
+            FowardedPort(guess="5432",host="8003"),
+        ]
 
         self.file = None
 
