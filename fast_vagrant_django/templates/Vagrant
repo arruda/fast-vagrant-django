@@ -19,8 +19,10 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider :virtualbox do |vb|
 
+    {% if vagrant.natdnshostresolver1 %}
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    vb.customize ["modifyvm", :id, "--memory", 1024]
+    {% endif %}
+    vb.customize ["modifyvm", :id, "--memory", {{ vagrant.vb_memory }}]
     vb.customize ["modifyvm", :id, "--name", "{{ vagrant.vb_name}}"]
   end
   config.vbguest.auto_update = false

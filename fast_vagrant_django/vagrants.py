@@ -19,21 +19,36 @@ class FowardedPort(object):
 class Vagrant(object):
     """docstring for Vagrant"""
 
-    def __init__(self, box="precise.box", private_network_ip="192.168.56.101",
-        box_url="http://files.vagrantup.com/precise64.box",
-        vb_name="proj-vm", manifest_file="proj.pp"):
+    def __init__(self, **kwargs):
         super(Vagrant, self).__init__()
-        self.box = box
-        self.private_network_ip = private_network_ip
-        self.box_url = box_url
-        self.vb_name = vb_name
-        self.manifest_file = manifest_file
-        self.forwarded_ports = [
-            FowardedPort(guess="8000",host="8000"),
-            FowardedPort(guess="5432",host="8003"),
-        ]
+        options = self.__default_options_dict()
+        options.update(kwargs)
+        for k,v in options.items():
+            self.__setattr__(k,v)
 
         self.file = None
+
+    def __default_options_dict(self):
+        "default options for this class kwargs"
+
+        kwargs = {
+            'box' : 'precise64',
+            'box_url' : "http://files.vagrantup.com/precise64.box",
+            'private_network_ip' : "192.168.56.101",
+
+            'forwarded_ports' : [
+                                    FowardedPort(guess="8000",host="8000"),
+                                    FowardedPort(guess="5432",host="8003"),
+                                ],
+
+            'natdnshostresolver1' : True,
+            'vb_name' : "proj-vm",
+            'vb_memory' : 1024,
+
+            'manifest_file' : "proj.pp",
+
+        }
+        return kwargs
 
     def load_template(self):
         return env.get_template('Vagrant')
