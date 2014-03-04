@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import
 import os
 import sys
 
@@ -11,6 +12,7 @@ if __name__ == "__main__" and __package__ is None:
 
     parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     os.sys.path.insert(1, parent_dir)
+
     mod = __import__('fast_vagrant_django')
     sys.modules["fast_vagrant_django"] = mod
 

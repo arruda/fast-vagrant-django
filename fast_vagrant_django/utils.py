@@ -34,6 +34,10 @@ class SimpleFileTemplate(object):
 
     def save_file(self,path):
         file_text = self.render_template()
+
+        if not os.path.exists(path):
+            os.makedirs(path)
+
         with open(os.path.join(path,self.output_file_name), 'w') as OutPutFile:
             OutPutFile.write(file_text)
 
