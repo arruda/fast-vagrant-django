@@ -1,9 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from __future__ import absolute_import
 
-from .utils import SimpleFileTemplate
 
 class FowardedPort(object):
 
@@ -13,12 +11,11 @@ class FowardedPort(object):
         self.host = host
 
 
-class Vagrant(SimpleFileTemplate):
-    """docstring for Vagrant"""
+class Vagrant(object):
+    """
+    Vagrant file representation
+    """
 
-    template_name    = "Vagrant"
-    output_file_name = "Vagrant"
-    object_name         = "vagrant"
 
     def __init__(self, **kwargs):
         super(Vagrant, self).__init__()
@@ -52,12 +49,4 @@ class Vagrant(SimpleFileTemplate):
         return kwargs
 
 
-    @classmethod
-    def new_vagrant(cls,path=".", **vagrant_kwargs):
-
-
-        v = Vagrant(**vagrant_kwargs)
-
-        v.save_file(path=path)
-        return v
 

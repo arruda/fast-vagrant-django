@@ -5,40 +5,31 @@ import os
 
 from jinja2 import Environment, FileSystemLoader
 
-loader = FileSystemLoader('./templates')
-env = Environment(loader = loader)
-
-
-class SimpleFileTemplate(object):
+class SimpleTemplateTofile(object):
     """
-        A simple file template that contains the logic
+        A simple template to file that contains the logic
         about jinja template rendering.
     """
 
-    template_name    = "a_template"
-    output_file_name = "a_file"
-    object_name      = "a_object"
+    loader = FileSystemLoader('./templates')
+    env = Environment(loader = loader)
 
     def __init__(self, **kwargs):
-        super(SimpleFileTemplate, self).__init__()
-        self.file = None
+        super(SimpleTemplateTofile, self).__init__()
 
-    def load_template(self):
-        return env.get_template(self.template_name)
 
-    def render_template(self):
-        t = self.load_template()
-        return t.render({
-            self.object_name :self,
-        })
+    def render_template(self,template_name="a_template", **data):
+        template = self.env.get_template(template_name)
 
-    def save_file(self,path):
-        file_text = self.render_template()
+        return template.render(**data)
+
+    def create_file(self, template_name="a_template", file_name="a_file", path=".", data={}):
+        template = self.render_template(template_name=template_name, **data)
 
         if not os.path.exists(path):
             os.makedirs(path)
 
-        with open(os.path.join(path,self.output_file_name), 'w') as OutPutFile:
-            OutPutFile.write(file_text)
+        with open(os.path.join(path, file_name), 'w') as OutPutFile:
+            OutPutFile.write(template)
 
-        self.file = OutPutFile
+        return OutPutFile

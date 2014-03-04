@@ -16,11 +16,13 @@ if __name__ == "__main__" and __package__ is None:
 
     __package__='fast_vagrant_django'
 
-    from .vagrants import Vagrant
+    from .core.projects import ProjectTemplate
+
 
 
     proj_name = sys.argv[1]
     path = sys.argv[2]
 
+    proj = ProjectTemplate(project_name=proj_name, path=path)
 
-    v = Vagrant.new_vagrant(path=path, vb_name=proj_name+"-vm", manifest_file=proj_name+".pp")
+    proj.create()
